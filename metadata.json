@@ -1,0 +1,6 @@
+{
+  "name": "Somali AI Vulnerability Predictor",
+  "description": "An easy-to-use AI tool to identify vulnerable Somali families in need of economic support. Calculates living cost risk, highlights urgent cases, and recommends practical assistance.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

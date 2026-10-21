@@ -1,0 +1,1154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WADAAG AI: Somali Household Economic Vulnerability System</title>
+    
+    <!-- Chart.js and Lucide libraries loaded standard -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" referrerPolicy="no-referrer"></script>
+    <script src="https://unpkg.com/lucide@latest" referrerPolicy="no-referrer"></script>
+  </head>
+  <body class="bg-dark-bg text-slate-100 flex flex-col min-h-screen relative overflow-x-hidden dot-overlay selection:bg-somali-blue-500 selection:text-white">
+    
+    <!-- Background Radiant Blue Ambient Orbs -->
+    <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-radial-glow -z-10 pointer-events-none opacity-50"></div>
+    <div class="absolute top-[800px] right-10 w-[600px] h-[600px] bg-radial-glow -z-10 pointer-events-none opacity-40"></div>
+    <div class="absolute bottom-[1200px] left-5 w-[500px] h-[500px] bg-radial-glow -z-10 pointer-events-none opacity-30"></div>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="w-full border-b border-white/5 bg-dark-bg/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <!-- Logo / Brand Shield -->
+        <a href="#" class="flex items-center gap-3 group">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-display font-bold text-lg text-white tracking-tight leading-none">WADAAG <span class="text-somali-blue-400">AI</span></span>
+              <span class="text-[10px] bg-somali-blue-500/15 text-somali-blue-300 tracking-widest uppercase px-2 py-0.5 rounded border border-somali-blue-500/30 font-bold font-mono text-glow-blue shadow-[0_0_12px_rgba(0,128,255,0.25)]">v2.6</span>
+            </div>
+            <p class="text-xs text-slate-400 font-sans font-medium mt-1">family economic support</p>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Items -->
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+          <a href="#about" class="hover:text-slate-100 transition-colors">Why It Matters</a>
+          <a href="#methodology" class="hover:text-slate-100 transition-colors">How It Works</a>
+          <a href="#bento" class="hover:text-slate-100 transition-colors">Key Features</a>
+          <a href="#dashboard" class="text-slate-200 bg-somali-blue-500/10 px-3 py-1.5 rounded-lg border border-somali-blue-500/20 hover:bg-somali-blue-500/20 hover:text-white transition-all">Risk Calculator</a>
+          <a href="#impact" class="hover:text-slate-100 transition-colors">Community Impact</a>
+        </nav>
+
+        <!-- Header Action Button -->
+        <div>
+          <a href="#dashboard" class="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-white bg-gradient-to-r from-somali-blue-600 to-somali-blue-500 hover:from-somali-blue-500 hover:to-somali-blue-400 transition-all rounded-lg glow-blue hover:scale-102">
+            <i data-lucide="calculator" class="w-4 h-4"></i>
+            <span>Assess a Household</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- QUICK HOUSEHOLD EXAMPLES -->
+    <section id="sample-profiles" class="w-full bg-slate-900/60 border-b border-white/5 py-3.5 px-4 sm:px-6 lg:px-8 glass relative">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="p-2 rounded bg-somali-blue-500/10 text-somali-blue-400 border border-somali-blue-500/20">
+            <i data-lucide="users" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-slate-200 flex items-center gap-2">
+              <span>Quick Test Examples</span>
+              <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
+            </h4>
+            <p class="text-xs text-slate-400">Click a sample family profile below to test the calculator immediately:</p>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-3">
+          <!-- Hassan trial Profile -->
+          <button id="demoHassanBtn" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700/80 hover:border-red-500/30 text-xs px-3.5 py-2.5 rounded-lg border border-white/5 transition-all text-slate-300 font-medium group cursor-pointer">
+            <span class="w-2 h-2 rounded-full bg-red-400"></span>
+            <span>Example 1: Hassan (Baidoa • Facing Drought)</span>
+            <i data-lucide="chevrons-right" class="w-3.5 h-3.5 text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+          </button>
+          
+          <!-- Amina trial Profile -->
+          <button id="demoAminaBtn" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700/80 hover:border-emerald-500/30 text-xs px-3.5 py-2.5 rounded-lg border border-white/5 transition-all text-slate-300 font-medium group cursor-pointer">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span>Example 2: Amina (Mogadishu • Small Shop)</span>
+            <i data-lucide="chevrons-right" class="w-3.5 h-3.5 text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <main class="flex-grow">
+
+      <!-- HERO SECTION -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <!-- Left Side Copy -->
+        <div class="lg:col-span-7 flex flex-col justify-center text-left scroll-animate opacity-0 translate-y-8 transition-all duration-700">
+          <!-- Top Branding Badge -->
+          <div class="inline-flex items-center gap-2.5 bg-somali-blue-500/10 hover:bg-somali-blue-500/20 text-somali-blue-300 border border-somali-blue-500/30 text-xs uppercase px-4 py-2 rounded-full font-mono tracking-wider w-fit mb-6 glass-accent brand-badge-glow transition-all duration-300 hover:scale-102 hover:border-somali-blue-400/50">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-somali-blue-400"></span>
+            </span>
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-somali-blue-400"></i>
+            <span class="font-bold text-glow-blue tracking-widest text-white">WADAAG AI</span>
+          </div>
+          
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold tracking-tight text-white leading-[1.1] mb-6">
+            Supporting <span class="bg-gradient-to-r from-somali-blue-400 to-sky-400 bg-clip-text text-transparent">Vulnerable Somali Families</span> with Smarter Aid
+          </h1>
+
+          <p class="text-lg text-slate-300 font-light leading-relaxed max-w-2xl mb-8">
+            WADAAG AI helps relief agencies, charities, and community workers quickly spot families facing economic hardship. By comparing living costs against monthly income and local weather conditions across all 18 Somali regions, help reaches households before food or water shortages worsen.
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-10">
+            <a href="#dashboard" class="px-6 py-4 rounded-xl text-center text-white bg-gradient-to-r from-somali-blue-600 to-somali-blue-500 hover:from-somali-blue-500 hover:to-somali-blue-400 shadow-xl glow-blue font-semibold transition-all hover:scale-102 flex items-center justify-center gap-2">
+              <i data-lucide="calculator" class="w-5 h-5"></i>
+              <span>Open Risk Calculator</span>
+            </a>
+            <a href="#methodology" class="px-6 py-4 rounded-xl text-center text-slate-300 bg-white/5 border border-white/10 hover:bg-white/10 transition-all font-semibold flex items-center justify-center gap-2">
+              <span>See How It Works</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+          </div>
+
+          <!-- Quick statistics overview (Animated counters) -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-6 rounded-2xl glass border border-white/5">
+            <div>
+              <p class="text-2xl sm:text-3xl font-display font-extrabold text-white counter-stat inline-block" data-target="12450" data-decimals="false">0</p>
+              <span class="text-lg font-display text-somali-blue-400 font-bold">+</span>
+              <p class="text-xs text-slate-400 uppercase tracking-widest font-semibold mt-1">Families Evaluated</p>
+            </div>
+            <div>
+              <p class="text-2xl sm:text-3xl font-display font-extrabold text-white counter-stat inline-block" data-target="98.4" data-decimals="true">0%</p>
+              <span class="text-lg font-display text-emerald-400 font-bold">%</span>
+              <p class="text-xs text-slate-400 uppercase tracking-widest font-semibold mt-1">Accuracy Rate</p>
+            </div>
+            <div>
+              <p class="text-2xl sm:text-3xl font-display font-extrabold text-white counter-stat inline-block" data-target="18" data-decimals="false">0</p>
+              <span class="text-lg font-display text-sky-400 font-bold">/18</span>
+              <p class="text-xs text-slate-400 uppercase tracking-widest font-semibold mt-1">Somali Regions</p>
+            </div>
+            <div>
+              <p class="text-2xl sm:text-3xl font-display font-extrabold text-white counter-stat inline-block" data-target="2.0" data-decimals="true">0s</p>
+              <span class="text-lg font-display text-slate-400 font-bold">s</span>
+              <p class="text-xs text-slate-400 uppercase tracking-widest font-semibold mt-1">Instant Results</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side Mockup image representation (Mogadishu Skyline) -->
+        <div class="lg:col-span-5 relative scroll-animate opacity-0 translate-y-8 transition-all duration-700 delay-200">
+          <!-- Glass surround structure mimicking beautiful dashboard preview -->
+          <div class="relative rounded-2xl border border-white/10 overflow-hidden glass p-3 shadow-2xl glow-blue animate-float">
+            <!-- Header elements of mockup bar -->
+            <div class="flex items-center justify-between border-b border-white/5 pb-3 mb-3 px-2">
+              <div class="flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded-full bg-red-400/80"></span>
+                <span class="w-3 h-3 rounded-full bg-amber-400/80"></span>
+                <span class="w-3 h-3 rounded-full bg-emerald-400/80"></span>
+              </div>
+              <div class="text-xs font-mono bg-dark-bg px-3 py-1 rounded border border-white/5 text-slate-400 text-glow-blue flex items-center gap-2">
+                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></span>
+                <span>SYSTEM STATUS: ACTIVE & READY</span>
+              </div>
+            </div>
+            <!-- Breathtaking skyline render -->
+            <div class="relative w-full aspect-video sm:aspect-square lg:aspect-[4/3] rounded-lg overflow-hidden bg-slate-950">
+              <img src="/src/assets/images/mogadishu_future_1780928433003.png" alt="Mogadishu City Skyline overlaid with digital connectivity" class="w-full h-full object-cover select-none object-center hover:scale-103 transition-transform duration-700" referrerPolicy="no-referrer" id="heroSkylineImg"/>
+              
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+              
+              <!-- Indicator markers on the image representing GIS live reporting -->
+              <div class="absolute bottom-4 left-4 right-4 bg-slate-900/90 backdrop-blur-md p-3 rounded-lg border border-white/10 flex items-center justify-between">
+                <div>
+                  <h4 class="text-xs font-bold text-white uppercase tracking-wider">Banaadir Region Hub</h4>
+                  <p class="text-[10px] text-slate-400 font-mono">Mogadishu Urban District</p>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-somali-blue-500 pulse-marker block"></span>
+                  <span class="text-[10px] font-mono text-somali-blue-400 font-bold">Live Risk Monitoring</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Tiny accent elements floating in background -->
+          <div class="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-tr from-sky-400 to-somali-blue-500 rounded-full blur-3xl opacity-30 -z-10"></div>
+          <div class="absolute -bottom-8 -left-8 w-32 h-32 bg-somali-blue-700/40 rounded-full blur-3xl opacity-20 -z-10"></div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: PROBLEM STATEMENT (THE SOCIO-ECONOMIC LANDSCAPE) -->
+      <section id="about" class="w-full border-t border-b border-white/5 bg-slate-950/45 py-20 relative">
+        <div class="absolute inset-x-0 top-0 h-40 bg-radial-top opacity-50 pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="text-center max-w-3xl mx-auto mb-16 scroll-animate opacity-0 translate-y-8 transition-all duration-700">
+            <span class="text-xs tracking-widest font-mono font-extrabold uppercase text-somali-blue-500 bg-somali-blue-500/10 px-3 py-1 rounded border border-somali-blue-500/20">The Problem</span>
+            <h2 class="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight mt-4">
+              Why Traditional Aid Surveys Are Too Slow
+            </h2>
+            <p class="text-slate-400 font-light mt-4 leading-relaxed">
+              Somali families often face sudden economic hardship—from severe droughts that harm crops and livestock to rising food prices. Traditional aid programs rely on slow paper surveys that take months to collect and analyze. By the time help arrives, families have already suffered severe loss.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <!-- Left Side: Smiling Somali Family shielded under analysis -->
+            <div class="lg:col-span-5 relative scroll-animate opacity-0 translate-y-8 transition-all duration-700">
+              <div class="relative rounded-2xl border border-white/10 overflow-hidden glass p-3 shadow-2xl hover:border-emerald-500/20 transition-all duration-500">
+                <div class="relative aspect-square sm:aspect-[4/3] lg:aspect-square rounded-lg overflow-hidden bg-slate-950">
+                  <img src="/src/assets/images/somali_family_economy_1780928451287.png" alt="Somali family smiling in a clean light-filled environment" class="w-full h-full object-cover object-center" referrerPolicy="no-referrer" id="problemFamilyImg" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/10 to-transparent"></div>
+                  
+                  <!-- Watermark indicating shield active -->
+                  <div class="absolute top-3 left-3 bg-somali-blue-500/90 text-white font-mono text-[9px] uppercase tracking-wider px-2 py-1 rounded border border-white/20 font-bold flex items-center gap-1.5 shadow-lg">
+                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                    <span>Wadaag Family Shield Active</span>
+                  </div>
+                </div>
+              </div>
+              <div class="absolute -bottom-6 -right-6 w-20 h-20 bg-emerald-500/20 rounded-full blur-2xl opacity-40"></div>
+            </div>
+
+            <!-- Right Side: Comparison between old and new -->
+            <div class="lg:col-span-7 space-y-6 scroll-animate opacity-0 translate-y-8 transition-all duration-700 delay-200">
+              <h3 class="text-xl sm:text-2xl font-display font-bold text-white flex items-center gap-2">
+                <span class="p-1 rounded bg-somali-blue-500/10 text-somali-blue-400">
+                  <i data-lucide="shuffle" class="w-5 h-5"></i>
+                </span>
+                <span>Moving from Slow Paperwork to Instant Action</span>
+              </h3>
+              
+              <div class="space-y-4">
+                <div class="bg-slate-900/40 border border-white/5 rounded-xl p-5 hover:border-red-500/20 hover:bg-slate-900/60 transition-all">
+                  <div class="flex items-start gap-4">
+                    <div class="p-2 bg-red-500/10 text-red-400 rounded-lg mt-0.5">
+                      <i data-lucide="clock" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-bold text-slate-200 flex items-center gap-2">
+                        <span>Old Method: Paper Surveys</span>
+                        <span class="text-[9px] bg-red-500/10 text-red-400 px-1.5 py-0.5 rounded font-mono uppercase font-bold border border-red-500/20">6 to 12 Months Delayed</span>
+                      </h4>
+                      <p class="text-xs text-slate-400 leading-relaxed mt-1">Teams travel to remote communities with paper forms. These forms sit in review queues for months, meaning emergency aid is often released long after the dry season has passed.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bg-slate-900/40 border border-white/5 rounded-xl p-5 hover:border-somali-blue-500/20 hover:bg-slate-900/60 transition-all">
+                  <div class="flex items-start gap-4">
+                    <div class="p-2 bg-somali-blue-500/10 text-somali-blue-400 rounded-lg mt-0.5">
+                      <i data-lucide="zap" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-bold text-slate-200 flex items-center gap-2">
+                        <span>WADAAG AI: Instant Household Assessment</span>
+                        <span class="text-[9px] bg-somali-blue-500/15 text-somali-blue-400 px-1.5 py-0.5 rounded font-mono uppercase font-bold border border-somali-blue-500/20">Results in Seconds</span>
+                      </h4>
+                      <p class="text-xs text-slate-400 leading-relaxed mt-1">Our system compares monthly income against essential food, water, and rent costs, together with regional weather conditions, to immediately calculate if a household needs emergency relief.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Mission Card -->
+                <div class="p-5 bg-gradient-to-tr from-somali-blue-600/10 to-transparent border border-somali-blue-500/20 rounded-xl flex items-center gap-4">
+                  <span class="p-3 bg-somali-blue-500/10 text-glow-blue text-white font-bold text-xl rounded-full">★</span>
+                  <div>
+                    <h5 class="text-xs font-bold text-somali-blue-300 uppercase tracking-widest font-mono">Our Mission</h5>
+                    <p class="text-xs text-slate-300 leading-relaxed mt-1">Delivering fast, fair, and transparent economic support to every Somali family in need, helping communities stay resilient against droughts and sudden economic shocks.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: HOW THE AI WORKS (PROCESS FLOW) -->
+      <section id="methodology" class="w-full py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="text-center max-w-3xl mx-auto mb-16 scroll-animate opacity-0 translate-y-8 transition-all duration-700">
+            <span class="text-xs tracking-widest font-mono font-extrabold uppercase text-somali-blue-500 bg-somali-blue-500/10 px-3 py-1 rounded border border-somali-blue-500/20">How It Works</span>
+            <h2 class="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight mt-4">
+              3 Simple Steps to Evaluate Household Need
+            </h2>
+            <p class="text-slate-400 font-light mt-4 leading-relaxed">
+              WADAAG AI combines local weather reports, household living costs, and direct relief connections to protect families before a crisis gets worse.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Step 1 Card -->
+            <div class="glass p-8 rounded-2xl glass-card-hover border border-white/5 flex flex-col justify-between h-full scroll-animate opacity-0 translate-y-8 transition-all duration-700">
+              <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <span class="p-3 bg-sky-500/10 text-sky-400 rounded-xl block">
+                    <i data-lucide="cloud-sun" class="w-6 h-6"></i>
+                  </span>
+                  <span class="text-3xl font-display font-bold text-slate-700/80">01</span>
+                </div>
+                <h3 class="text-lg font-display font-bold text-slate-100 mt-6">Local Weather & Drought Check</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                  The system reviews regional rainfall, pasture conditions, and food market prices in the family's province to understand local hardship.
+                </p>
+              </div>
+              <div class="mt-8 pt-4 border-t border-white/5 flex items-center gap-2 text-[10px] font-mono text-sky-400">
+                <span class="w-1.5 h-1.5 bg-sky-400 rounded-full animate-ping"></span>
+                <span>Regional Drought Baseline</span>
+              </div>
+            </div>
+
+            <!-- Step 2 Card -->
+            <div class="glass p-8 rounded-2xl glass-card-hover border border-white/5 flex flex-col justify-between h-full scroll-animate opacity-0 translate-y-8 transition-all duration-700 delay-150">
+              <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <span class="p-3 bg-somali-blue-500/10 text-somali-blue-400 rounded-xl block">
+                    <i data-lucide="scale" class="w-6 h-6"></i>
+                  </span>
+                  <span class="text-3xl font-display font-bold text-slate-700/80">02</span>
+                </div>
+                <h3 class="text-lg font-display font-bold text-slate-100 mt-6">Compare Income vs Expenses</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                  We calculate whether monthly family earnings cover essential costs like food, clean water, housing, and medicine based on family size.
+                </p>
+              </div>
+              <div class="mt-8 pt-4 border-t border-white/5 flex items-center gap-2 text-[10px] font-mono text-somali-blue-400">
+                <span class="w-1.5 h-1.5 bg-somali-blue-500 rounded-full animate-ping"></span>
+                <span>Fair Household Score</span>
+              </div>
+            </div>
+
+            <!-- Step 3 Card -->
+            <div class="glass p-8 rounded-2xl glass-card-hover border border-white/5 flex flex-col justify-between h-full scroll-animate opacity-0 translate-y-8 transition-all duration-700 delay-300">
+              <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <span class="p-3 bg-emerald-500/10 text-emerald-400 rounded-xl block">
+                    <i data-lucide="phone-forwarded" class="w-6 h-6"></i>
+                  </span>
+                  <span class="text-3xl font-display font-bold text-slate-700/80">03</span>
+                </div>
+                <h3 class="text-lg font-display font-bold text-slate-100 mt-6">Connect to Direct Support</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                  High-risk families are flagged immediately for emergency cash transfers through mobile services like Hormuud EVC Plus and food support programs.
+                </p>
+              </div>
+              <div class="mt-8 pt-4 border-t border-white/5 flex items-center gap-2 text-[10px] font-mono text-emerald-400">
+                <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping"></span>
+                <span>Mobile Money Integration</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: bento grid FEATURES SECTION -->
+      <section id="bento" class="w-full bg-slate-950/45 py-20 border-t border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="text-center max-w-3xl mx-auto mb-16 scroll-animate opacity-0 translate-y-8 transition-all duration-700">
+            <span class="text-xs tracking-widest font-mono font-extrabold uppercase text-somali-blue-500 bg-somali-blue-500/10 px-3 py-1 rounded border border-somali-blue-500/20">Key Features</span>
+            <h2 class="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight mt-4">
+              Practical Tools for Field Workers and Aid Teams
+            </h2>
+            <p class="text-slate-400 font-light mt-4 leading-relaxed">
+              Designed for charities, relief organizations, and community workers to assess family needs with speed and clarity.
+            </p>
+          </div>
+
+          <!-- Bento Grid Layout -->
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+            
+            <!-- Bento Box 1: Large (Region Hotspots GIS) -->
+            <div class="md:col-span-8 glass p-6 rounded-2xl border border-white/5 flex flex-col justify-between hover:border-somali-blue-500/20 transition-all duration-300">
+              <div class="flex items-start gap-4">
+                <div class="p-2 bg-somali-blue-500/10 text-somali-blue-400 rounded-lg">
+                  <i data-lucide="map-pin" class="w-6 h-6"></i>
+                </div>
+                <div>
+                  <h3 class="text-base font-bold text-white">Regional Risk Overview</h3>
+                  <p class="text-xs text-slate-400 leading-relaxed mt-1">Check drought and flood conditions across major hubs like Baidoa, Beledweyne, and Mogadishu. Helps aid organizations prioritize where relief supplies are needed first.</p>
+                </div>
+              </div>
+              <!-- Simulated map indicators graphic -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
+                <div class="bg-slate-900/60 p-3 rounded-lg border border-white/5">
+                  <p class="text-[10px] uppercase font-mono text-slate-500">Bay (Baidoa)</p>
+                  <p class="text-sm font-display font-bold text-red-400 mt-1 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-400 block animate-pulse"></span>
+                    <span>78.5% High Risk</span>
+                  </p>
+                </div>
+                <div class="bg-slate-900/60 p-3 rounded-lg border border-white/5">
+                  <p class="text-[10px] uppercase font-mono text-slate-500">Banaadir (Mogadishu)</p>
+                  <p class="text-sm font-display font-bold text-sky-400 mt-1 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-sky-400 block"></span>
+                    <span>36.2% Low Risk</span>
+                  </p>
+                </div>
+                <div class="bg-slate-900/60 p-3 rounded-lg border border-white/5">
+                  <p class="text-[10px] uppercase font-mono text-slate-500">L. Juba (Kismayo)</p>
+                  <p class="text-sm font-display font-bold text-amber-500 mt-1 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 block"></span>
+                    <span>58.4% Med Risk</span>
+                  </p>
+                </div>
+                <div class="bg-slate-900/60 p-3 rounded-lg border border-white/5">
+                  <p class="text-[10px] uppercase font-mono text-slate-500">Hiran (Beletweyne)</p>
+                  <p class="text-sm font-display font-bold text-red-400 mt-1 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-400 block animate-pulse"></span>
+                    <span>72.4% Severe</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bento Box 2: Small height (Micro-expenses index) -->
+            <div class="md:col-span-4 glass p-6 rounded-2xl border border-white/5 flex flex-col justify-between hover:border-sky-500/20 transition-all duration-300">
+              <div class="space-y-4">
+                <span class="p-2.5 bg-sky-500/10 text-sky-400 rounded-lg inline-block">
+                  <i data-lucide="badge-dollar-sign" class="w-5 h-5"></i>
+                </span>
+                <h3 class="text-base font-bold text-white">Living Cost Pressure</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                  Directly evaluates whether basic necessities (grain staples, clean drinking water, shelter) exceed total household income.
+                </p>
+              </div>
+              <div class="font-mono text-[10px] text-sky-400 bg-sky-500/5 px-2.5 py-1.5 rounded border border-sky-500/10 w-fit">
+                Essential Costs Tracked
+              </div>
+            </div>
+
+            <!-- Bento Box 3: Small height (Policy Intervention Recommendation Engine) -->
+            <div class="md:col-span-4 glass p-6 rounded-2xl border border-white/5 flex flex-col justify-between hover:border-emerald-500/20 transition-all duration-300">
+              <div class="space-y-4">
+                <span class="p-2.5 bg-emerald-500/10 text-emerald-400 rounded-lg inline-block">
+                  <i data-lucide="shield" class="w-5 h-5"></i>
+                </span>
+                <h3 class="text-base font-bold text-white">Actionable Recommendations</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                  Instead of just showing a score, the tool suggests concrete actions—like emergency monthly cash transfers, food vouchers, or job training.
+                </p>
+              </div>
+              <div class="font-mono text-[10px] text-emerald-400 bg-emerald-500/5 px-2.5 py-1.5 rounded border border-emerald-500/10 w-fit">
+                Real Support Guidance
+              </div>
+            </div>
+
+            <!-- Bento Box 4: Large (National Registry Sync table preview) -->
+            <div class="md:col-span-8 glass p-6 rounded-2xl border border-white/5 flex flex-col justify-between hover:border-somali-blue-500/20 transition-all duration-300">
+              <div class="flex items-start gap-4">
+                <div class="p-2 bg-purple-500/10 text-purple-400 rounded-lg">
+                  <i data-lucide="database" class="w-6 h-6"></i>
+                </div>
+                <div>
+                  <h3 class="text-base font-bold text-white">Saved Family Database</h3>
+                  <p class="text-xs text-slate-400 leading-relaxed mt-1">Keep track of every household evaluation in an organized, searchable list. Easily export records for reporting, program audits, or donor updates.</p>
+                </div>
+              </div>
+              <div class="bg-slate-900/60 rounded-lg p-3 border border-white/5 mt-5 flex items-center justify-between text-xs text-slate-400 font-mono">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 block"></span>
+                  <span>Database Ready • Local Storage Active</span>
+                </div>
+                <span class="text-[10px] text-emerald-400 font-bold">Status: Online</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 5: THE INTERACTIVE DASHBOARD PORTAL & PREDICTOR -->
+      <section id="dashboard" class="w-full py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="text-center max-w-3xl mx-auto mb-16 scroll-animate opacity-0 translate-y-8 transition-all duration-700">
+            <span class="text-xs tracking-widest font-mono font-extrabold uppercase text-somali-blue-500 bg-somali-blue-500/10 px-3 py-1 rounded border border-somali-blue-500/20">Interactive Tool</span>
+            <h2 class="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight mt-4 font-display">
+              WADAAG AI Household Risk Calculator
+            </h2>
+            <p class="text-slate-400 font-light mt-4 leading-relaxed">
+              Enter a family's monthly earnings, living expenses, and household size to immediately calculate their economic vulnerability score and receive clear next steps.
+            </p>
+          </div>
+
+          <!-- THE MAIN FULL DASHBOARD PORTAL STRUCTURAL CONTAINER -->
+          <div class="w-full rounded-3xl border border-white/10 glass shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[700px]">
+            
+            <!-- DASHBOARD SIDEBAR NAVIGATION -->
+            <aside class="lg:col-span-3 border-r border-white/5 bg-slate-900/40 p-6 flex flex-col justify-between">
+              <div class="space-y-8">
+                <!-- System Header -->
+                <div class="flex items-center gap-3 pb-6 border-b border-white/5">
+                  <div class="w-8 h-8 rounded-full bg-somali-blue-500/20 text-somali-blue-400 flex items-center justify-between text-xs font-bold ring-2 ring-somali-blue-500/10">
+                    <span class="mx-auto">WAD</span>
+                  </div>
+                  <div>
+                    <h4 class="text-xs font-bold text-slate-200 font-mono tracking-wider">WADAAG AI SYSTEM</h4>
+                    <span class="text-[9px] text-emerald-400 font-mono block">Status: Online & Ready</span>
+                  </div>
+                </div>
+
+                <!-- Internal Dashboard Nav items -->
+                <div class="space-y-1.5">
+                  <span class="text-[9px] text-slate-500 font-mono tracking-widest uppercase block pl-3 mb-2">Navigation</span>
+                  <a href="#dashboard" class="flex items-center gap-3 bg-somali-blue-500/15 text-white text-xs font-semibold px-3 py-2.5 rounded-lg border border-somali-blue-500/25 shadow-sm">
+                    <i data-lucide="calculator" class="w-4 h-4 text-somali-blue-400"></i>
+                    <span>Household Calculator</span>
+                  </a>
+                  <a href="#about" class="flex items-center gap-3 text-slate-400 hover:text-white text-xs font-medium px-3 py-2.5 rounded-lg hover:bg-white/5 transition-all">
+                    <i data-lucide="info" class="w-4 h-4"></i>
+                    <span>Why It Matters</span>
+                  </a>
+                  <a href="#registry-section" class="flex items-center gap-3 text-slate-400 hover:text-white text-xs font-medium px-3 py-2.5 rounded-lg hover:bg-white/5 transition-all">
+                    <i data-lucide="database" class="w-4 h-4"></i>
+                    <span>Saved Family Records</span>
+                  </a>
+                  <a href="#sample-profiles" class="flex items-center gap-3 text-slate-400 hover:text-white text-xs font-medium px-3 py-2.5 rounded-lg hover:bg-white/5 transition-all">
+                    <i data-lucide="users" class="w-4 h-4"></i>
+                    <span>Quick Test Examples</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Presentation footer widget -->
+              <div class="bg-slate-950/60 border border-white/5 p-4 rounded-xl space-y-2 mt-8">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 block animate-ping"></span>
+                  <span class="text-[10px] font-mono text-slate-400 font-bold uppercase tracking-widest">Active Coverage</span>
+                </div>
+                <p class="text-[10px] text-slate-500 leading-normal">Supporting communities across all 18 administrative regions of Somalia.</p>
+              </div>
+            </aside>
+
+            <!-- DASHBOARD CONTENT SPACE -->
+            <section class="lg:col-span-9 p-6 sm:p-8 flex flex-col justify-between space-y-8 bg-slate-900/10">
+              
+              <!-- TOP GLOBAL COUNTERS BAR -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <!-- Card A: Total logs -->
+                <div class="bg-slate-900/60 rounded-xl p-4 border border-white/5 flex items-center justify-between">
+                  <div>
+                    <span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest block font-bold">Total Families Assessed</span>
+                    <p class="text-2xl font-display font-extrabold text-white mt-1" id="countTotalFamilies">12</p>
+                  </div>
+                  <div class="p-2 bg-somali-blue-500/10 text-somali-blue-400 rounded-lg">
+                    <i data-lucide="users" class="w-5 h-5"></i>
+                  </div>
+                </div>
+
+                <!-- Card B: National Volatility Index -->
+                <div class="bg-slate-900/60 rounded-xl p-4 border border-white/5 flex items-center justify-between">
+                  <div>
+                    <span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest block font-bold">Average National Risk</span>
+                    <p class="text-2xl font-display font-extrabold text-amber-400 mt-1" id="countNationalIndex">61%</p>
+                  </div>
+                  <div class="p-2 bg-amber-500/10 text-amber-400 rounded-lg">
+                    <i data-lucide="activity" class="w-5 h-5"></i>
+                  </div>
+                </div>
+
+                <!-- Card C: Active High Risk alerts -->
+                <div class="bg-slate-900/60 rounded-xl p-4 border border-white/5 flex items-center justify-between">
+                  <div>
+                    <span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest block font-bold">Urgent High-Risk Families</span>
+                    <p class="text-2xl font-display font-extrabold text-red-400 mt-1" id="countHighRiskCount">3 Households</p>
+                  </div>
+                  <div class="p-2 bg-red-500/10 text-red-400 rounded-lg">
+                    <i data-lucide="bell" class="w-5 h-5"></i>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PREDICTIVE TOOL GRID AREA (INPUT AND OUTPUT SECTIONS) -->
+              <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+                
+                <!-- INPUT FORM COLUMN -->
+                <div class="xl:col-span-7 bg-slate-900/40 border border-white/5 rounded-2xl p-6 space-y-5" id="predictorInteractionSection">
+                  <div class="flex items-center gap-2">
+                    <span class="p-1 px-2 rounded bg-somali-blue-500/15 text-somali-blue-400 text-xs font-mono font-bold uppercase tracking-wider">Household Details</span>
+                    <h3 class="text-sm font-bold text-slate-200">Enter Family Information</h3>
+                  </div>
+
+                  <form class="space-y-4 text-xs font-medium text-slate-300">
+                    
+                    <!-- Region selection -->
+                    <div class="flex flex-col gap-1.5">
+                      <label for="householdRegion" class="text-slate-400">Region of Residence</label>
+                      <select id="householdRegion" class="bg-slate-950 border border-white/10 rounded-lg px-3 py-2.5 text-slate-200 text-xs font-sans">
+                        <option value="Banaadir">Mogadishu (Banaadir) — Capital City Hub</option>
+                        <option value="Bay">Baidoa (Bay Region) — Dryland Farming Area</option>
+                        <option value="Lower-Juba">Kismayo (Lower Juba) — Coastal & Port Zone</option>
+                        <option value="Woqooyi-Galbeed">Hargeisa (Woqooyi Galbeed) — Northern Commercial Hub</option>
+                        <option value="Nugaal">Garowe (Nugaal) — Central Administrative Area</option>
+                        <option value="Mudug">Galkacyo (Mudug) — Central Trade Crossroads</option>
+                        <option value="Hiran">Beledweyne (Hiran) — River Farming District</option>
+                        <option value="Bari">Bossaso (Bari) — Port Trade City</option>
+                      </select>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <!-- Monthly Income -->
+                      <div class="flex flex-col gap-1.5">
+                        <label for="incomeVal" class="text-indigo-300 flex items-center gap-1">
+                          <i data-lucide="dollar-sign" class="w-3.5 h-3.5 text-somali-blue-400"></i>
+                          <span>Monthly Household Income (USD $)</span>
+                        </label>
+                        <input type="number" id="incomeVal" value="180" placeholder="e.g. 150" min="0" class="bg-slate-950 border border-white/10 rounded-lg px-3 py-2.5 text-slate-200 text-xs font-mono" />
+                        <span class="text-[9px] text-slate-500">Total money earned per month, including support from relatives.</span>
+                      </div>
+
+                      <!-- Monthly Expenses -->
+                      <div class="flex flex-col gap-1.5">
+                        <label for="expensesVal" class="text-slate-400 flex items-center gap-1">
+                          <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+                          <span>Monthly Living Expenses (USD $)</span>
+                        </label>
+                        <input type="number" id="expensesVal" value="160" placeholder="e.g. 130" min="0" class="bg-slate-950 border border-white/10 rounded-lg px-3 py-2.5 text-slate-200 text-xs font-mono" />
+                        <span class="text-[9px] text-slate-500">Costs for staple food, clean drinking water, rent, and fuel.</span>
+                      </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <!-- Employment/Revenue Type -->
+                      <div class="flex flex-col gap-1.5">
+                        <label for="employmentStatus" class="text-slate-400">Main Source of Income</label>
+                        <select id="employmentStatus" class="bg-slate-950 border border-white/10 rounded-lg px-3 py-2.5 text-slate-200 text-xs">
+                          <option value="salary">Full-Time Salary / Formal Job</option>
+                          <option value="business">Small Shop / Market Seller</option>
+                          <option value="wage" selected>Daily Wage Labor (Construction / Casual Work)</option>
+                          <option value="agriculture">Livestock Herder / Dryland Farmer</option>
+                          <option value="unemployed">Unemployed / Remittances Only</option>
+                        </select>
+                      </div>
+
+                      <!-- Highest Education Level achieved -->
+                      <div class="flex flex-col gap-1.5">
+                        <label for="educationLevel" class="text-slate-400">Highest Education in Family</label>
+                        <select id="educationLevel" class="bg-slate-950 border border-white/10 rounded-lg px-3 py-2.5 text-slate-200 text-xs">
+                          <option value="university">University Degree</option>
+                          <option value="technical">Vocational / Technical College</option>
+                          <option value="secondary">Completed High School</option>
+                          <option value="primary" selected>Primary School Level Only</option>
+                          <option value="none">No Formal Schooling</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <!-- Household dependents count -->
+                    <div class="flex flex-col gap-1.5">
+                      <label for="householdSize" class="text-slate-400 flex items-center gap-1">
+                        <i data-lucide="users-round" class="w-3.5 h-3.5"></i>
+                        <span>Total Family Members in Home</span>
+                      </label>
+                      <input type="number" id="householdSize" value="7" min="1" max="25" class="bg-slate-950 border border-white/10 rounded-lg px-3 py-2.5 text-slate-200 text-xs font-mono" />
+                      <span class="text-[9px] text-slate-500">Total adults and children supported by this household budget.</span>
+                    </div>
+
+                    <!-- RUN INFERENCE SUBMIT BUTTON -->
+                    <button type="button" id="runPredictorBtn" class="w-full mt-2 py-3.5 rounded-xl text-white bg-gradient-to-r from-somali-blue-600 to-somali-blue-500 hover:from-somali-blue-500 hover:to-somali-blue-400 font-bold transition-all flex items-center justify-center gap-2 glow-blue hover:scale-[1.01] active:scale-[0.99] cursor-pointer">
+                      <i data-lucide="calculator" class="w-5 h-5 text-glow-blue"></i>
+                      <span>Calculate Household Risk</span>
+                    </button>
+                  </form>
+                </div>
+
+                <!-- OUTPUT RESULTS COLUMN (CONTAINING GAUGES & ACTION LISTS) -->
+                <div class="xl:col-span-5 flex flex-col justify-between h-full bg-slate-900/40 border border-white/5 rounded-2xl p-6 space-y-6 min-h-[460px] relative overflow-hidden" id="predictionResultCard">
+                  
+                  <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-somali-blue-400 to-sky-400"></div>
+
+                  <!-- Header result status -->
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">Assessment Results</span>
+                    <span class="text-[10px] text-slate-500 flex items-center gap-1 font-mono">
+                      <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i>
+                      <span>Ready for Action</span>
+                    </span>
+                  </div>
+
+                  <!-- RADIAL SCORE GAUGE DIAGRAM -->
+                  <div class="flex items-center justify-center gap-6 mt-2">
+                    <div class="relative w-32 h-32">
+                      <!-- SVG gauge circle -->
+                      <svg class="transform -rotate-90 w-32 h-32">
+                        <circle cx="64" cy="64" r="50" stroke="rgba(255, 255, 255, 0.04)" stroke-width="8" fill="transparent" />
+                        <circle cx="64" cy="64" r="50" stroke="#0080ff" stroke-width="8" fill="transparent" id="radialProgressCircle" stroke-dasharray="314.16" stroke-dashoffset="120" style="transition: stroke-dashoffset 0.8s ease-in-out;" />
+                      </svg>
+                      <!-- Value in absolute center -->
+                      <div class="absolute inset-0 flex flex-col items-center justify-center">
+                        <span class="text-3xl font-display font-extrabold text-white" id="resScoreNum">64%</span>
+                        <span class="text-[9px] uppercase tracking-widest text-slate-500 font-bold font-mono">Risk Score</span>
+                      </div>
+                    </div>
+
+                    <!-- Category tag and overall classification -->
+                    <div class="space-y-2">
+                      <p class="text-xs text-slate-400 font-mono">Risk Level:</p>
+                      <p class="inline-block" id="resLevelBadgeContainer">
+                        <span class="px-3 py-1.5 rounded-full text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30" id="resLevelBadge">Medium Risk</span>
+                      </p>
+                      <div class="pt-1.5 flex items-center gap-1.5">
+                        <span class="text-xs font-semibold text-slate-200" id="resConfidenceNum">94.8%</span>
+                        <span class="text-[10px] text-slate-400 leading-none">Assessment Confidence</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- CORE SPECIFICS PREVIEW (Income vs Expenses stats summary) -->
+                  <div class="grid grid-cols-2 gap-3 bg-slate-950/45 p-4 rounded-xl border border-white/5 text-xs font-medium">
+                    <div>
+                      <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Per Person Income</p>
+                      <p class="text-base font-display font-bold text-slate-200 mt-1" id="resPciText">$25/person</p>
+                    </div>
+                    <div>
+                      <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Family Size</p>
+                      <p class="text-base font-display font-bold text-slate-200 mt-1" id="resHSizeText">7 members</p>
+                    </div>
+                    <div class="border-t border-white/5 pt-2">
+                      <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Monthly Income</p>
+                      <p class="text-sm font-display font-bold text-sky-400 mt-1" id="resIncomeText">$180/mo</p>
+                    </div>
+                    <div class="border-t border-white/5 pt-2">
+                      <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Living Expenses</p>
+                      <p class="text-sm font-display font-bold text-slate-300 mt-1" id="resExpensesText">$160/mo</p>
+                    </div>
+                  </div>
+
+                  <!-- AI ACTIONABLE INTERVENTIONS RECOMMENDATION LIST -->
+                  <div class="space-y-2.5">
+                    <p class="text-[10px] font-mono text-slate-400 uppercase tracking-widest block font-bold">Recommended Support Actions</p>
+                    <ul class="space-y-2" id="resRecommendationList">
+                      <!-- Active list elements injected via script.js -->
+                      <li class="flex items-start gap-3 bg-slate-900/40 p-3 rounded-lg border border-white/5">
+                        <span class="p-1 rounded bg-sky-500/10 text-sky-400 mt-0.5">
+                          <i data-lucide="trending-up" class="w-4 h-4"></i>
+                        </span>
+                        <span class="text-sm text-slate-300 leading-relaxed">Eligible for small business training and emergency food vouchers.</span>
+                      </li>
+                      <li class="flex items-start gap-3 bg-slate-900/40 p-3 rounded-lg border border-white/5">
+                        <span class="p-1 rounded bg-sky-500/10 text-sky-400 mt-0.5">
+                          <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+                        </span>
+                        <span class="text-sm text-slate-300 leading-relaxed">Recommended for vocational education stipends to boost earning power.</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <!-- SAVE/PERSIST RECORDS BUTTON -->
+                  <button type="button" id="commitRegistryBtn" class="w-full mt-2 py-3 border border-emerald-500/20 bg-emerald-500/10 hover:bg-emerald-500/15 text-emerald-400 rounded-xl text-xs font-bold font-mono tracking-widest uppercase transition-all flex items-center justify-center gap-2 cursor-pointer">
+                    <i data-lucide="save" class="w-4 h-4"></i>
+                    <span>Save Assessment to Records</span>
+                  </button>
+
+                </div>
+
+              </div>
+
+              <!-- MIDDLE GRAPHS AREA: ANALYTICAL CHARTS -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                <!-- CHART A: BAR GRAPH OF REGIONAL INDEXES -->
+                <div class="bg-slate-900/40 border border-white/5 rounded-2xl p-5 flex flex-col justify-between">
+                  <div class="flex items-center justify-between pb-4 border-b border-white/5 mb-4">
+                    <h4 class="text-xs font-bold text-slate-200 uppercase tracking-widest font-mono flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-somali-blue-500"></span>
+                      <span>Regional Risk Levels</span>
+                    </h4>
+                    <span class="text-[10px] text-slate-400 font-mono text-glow-blue">% average risk</span>
+                  </div>
+                  <div class="relative h-60">
+                    <canvas id="regionalRiskChart"></canvas>
+                  </div>
+                  <p class="text-[10px] text-slate-500 italic mt-3 leading-snug">Average risk scores computed from saved household evaluations in each province.</p>
+                </div>
+
+                <!-- CHART B: DOUGHNUT RISK LEVEL SPREAD -->
+                <div class="bg-slate-900/40 border border-white/5 rounded-2xl p-5 flex flex-col justify-between">
+                  <div class="flex items-center justify-between pb-4 border-b border-white/5 mb-4">
+                    <h4 class="text-xs font-bold text-slate-200 uppercase tracking-widest font-mono flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                      <span>Risk Category Breakdown</span>
+                    </h4>
+                    <span class="text-[10px] text-slate-400 font-mono uppercase tracking-widest">Household Share</span>
+                  </div>
+                  <div class="relative h-60">
+                    <canvas id="riskShareChart"></canvas>
+                  </div>
+                  <p class="text-[10px] text-slate-500 italic mt-3 leading-snug">Percentage of evaluated families classified as High, Medium, or Low Risk.</p>
+                </div>
+              </div>
+
+              <!-- MIDDLE INTERACTION WIDGET: GEOGRAPHICAL HOTSPOT SELECTOR -->
+              <div class="bg-slate-900/30 border border-white/5 rounded-2xl p-6 mt-4">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-white/5 mb-6">
+                  <div>
+                    <h4 class="text-xs font-bold text-slate-200 uppercase tracking-widest font-mono">Regional Weather & Hardship Watch</h4>
+                    <p class="text-[10px] text-slate-400 mt-1">Select a province below to view local drought vulnerability and current family evaluations.</p>
+                  </div>
+                  <span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded font-mono font-bold">18 Regions Active</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                  <!-- GIS interactive selectors -->
+                  <div class="md:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <button data-region="Banaadir" class="map-pulse p-3 rounded-xl border border-white/5 bg-slate-950 hover:bg-slate-900 text-left transition-all ring-1 ring-white/5 relative flex flex-col justify-between cursor-pointer group">
+                      <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-emerald-400"></span>
+                      <p class="text-[10px] font-mono text-slate-400 uppercase">Mogadishu</p>
+                      <span class="text-xs font-bold text-slate-200 mt-4 group-hover:text-somali-blue-400">Banaadir</span>
+                    </button>
+                    <button data-region="Bay" class="map-pulse p-3 rounded-xl border border-white/5 bg-slate-950 hover:bg-slate-900 text-left transition-all ring-1 ring-white/5 relative flex flex-col justify-between cursor-pointer group">
+                      <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+                      <p class="text-[10px] font-mono text-slate-400 uppercase">Baidoa</p>
+                      <span class="text-xs font-bold text-slate-200 mt-4 group-hover:text-somali-blue-400">Bay Hub</span>
+                    </button>
+                    <button data-region="Lower-Juba" class="map-pulse p-3 rounded-xl border border-white/5 bg-slate-950 hover:bg-slate-900 text-left transition-all ring-1 ring-white/5 relative flex flex-col justify-between cursor-pointer group">
+                      <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-amber-500"></span>
+                      <p class="text-[10px] font-mono text-slate-400 uppercase">Kismayo</p>
+                      <span class="text-xs font-bold text-slate-200 mt-4 group-hover:text-somali-blue-400 font-display">L. Juba</span>
+                    </button>
+                    <button data-region="Hiran" class="map-pulse p-3 rounded-xl border border-white/5 bg-slate-950 hover:bg-slate-900 text-left transition-all ring-1 ring-white/5 relative flex flex-col justify-between cursor-pointer group">
+                      <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-400"></span>
+                      <p class="text-[10px] font-mono text-slate-400 uppercase">Beledweyne</p>
+                      <span class="text-xs font-bold text-slate-200 mt-4 group-hover:text-somali-blue-400 font-display">Hiran</span>
+                    </button>
+                    <button data-region="Woqooyi-Galbeed" class="map-pulse p-3 rounded-xl border border-white/5 bg-slate-950 hover:bg-slate-900 text-left transition-all ring-1 ring-white/5 relative flex flex-col justify-between cursor-pointer group">
+                      <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-emerald-500"></span>
+                      <p class="text-[10px] font-mono text-slate-400 uppercase">Hargeisa</p>
+                      <span class="text-xs font-bold text-slate-200 mt-4 group-hover:text-somali-blue-400 font-display">W. Galbeed</span>
+                    </button>
+                    <button data-region="Nugaal" class="map-pulse p-3 rounded-xl border border-white/5 bg-slate-950 hover:bg-slate-900 text-left transition-all ring-1 ring-white/5 relative flex flex-col justify-between cursor-pointer group font-display">
+                      <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-emerald-400"></span>
+                      <p class="text-[10px] font-mono text-slate-400 uppercase text-glow-blue">Garowe</p>
+                      <span class="text-xs font-bold text-slate-200 mt-4 group-hover:text-somali-blue-400">Nugaal</span>
+                    </button>
+                    <button data-region="Mudug" class="map-pulse p-3 rounded-xl border border-white/5 bg-slate-950 hover:bg-slate-900 text-left transition-all ring-1 ring-white/5 relative flex flex-col justify-between cursor-pointer group">
+                      <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-amber-400"></span>
+                      <p class="text-[10px] font-mono text-slate-400 uppercase">Galkacyo</p>
+                      <span class="text-xs font-bold text-slate-200 mt-4 group-hover:text-somali-blue-400">Mudug</span>
+                    </button>
+                    <button data-region="Bari" class="map-pulse p-3 rounded-xl border border-white/5 bg-slate-950 hover:bg-slate-900 text-left transition-all ring-1 ring-white/5 relative flex flex-col justify-between cursor-pointer group">
+                      <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-emerald-400"></span>
+                      <p class="text-[10px] font-mono text-slate-400 uppercase">Bossaso</p>
+                      <span class="text-xs font-bold text-slate-200 mt-4 group-hover:text-somali-blue-400">Bari</span>
+                    </button>
+                  </div>
+
+                  <!-- ACTIVE REGION VIEW DRAWER CARD -->
+                  <div class="md:col-span-5 bg-slate-950 border border-white/10 rounded-xl p-4 opacity-70 transition-all duration-300 flex flex-col justify-between min-h-[140px]" id="activeRegionCard">
+                    <div class="flex items-center justify-between">
+                      <h5 class="text-sm font-bold text-white tracking-tight" id="activeRegName">Mogadishu (Banaadir)</h5>
+                      <span class="px-2.5 py-0.5 rounded bg-sky-500/10 text-sky-400 text-[9px] font-mono uppercase font-bold tracking-widest" id="activeRegRisk">Low Risk</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mt-4 text-xs">
+                      <div>
+                        <span class="text-[9px] font-mono text-slate-500 uppercase tracking-widest font-bold">Food & Drought Index</span>
+                        <p class="text-sm font-semibold text-slate-200 mt-1" id="activeFoodIndex">12/20 index</p>
+                      </div>
+                      <div>
+                        <span class="text-[9px] font-mono text-slate-500 uppercase tracking-widest font-bold">Saved Family Records</span>
+                        <p class="text-sm font-semibold text-slate-200 mt-1" id="activeRegCensusCount">1 recorded families</p>
+                      </div>
+                    </div>
+                    <div class="border-t border-white/5 pt-3 mt-3 flex items-center justify-between">
+                      <span class="text-xs font-mono text-slate-400">Estimated Regional Risk:</span>
+                      <span class="text-base font-display font-black text-somali-blue-400" id="activeRegScoreText">42%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <!-- REGION SECTION 6: SAVED ASSESSMENT RECORDS TABLE -->
+      <section id="registry-section" class="w-full bg-slate-950/45 py-20 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-10 gap-4">
+            <div>
+              <span class="text-xs tracking-widest font-mono font-extrabold uppercase text-somali-blue-500 bg-somali-blue-500/10 px-3 py-1 rounded border border-somali-blue-500/20">Family Records</span>
+              <h2 class="text-3xl font-display font-extrabold text-white mt-4">Household Assessment Database</h2>
+              <p class="text-xs text-slate-400 mt-1">Recent family evaluations saved by field teams and community workers for relief coordination.</p>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-slate-400">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+              <span class="font-mono">Database Status: Ready & Synced Locally</span>
+            </div>
+          </div>
+
+          <!-- Ledger Table -->
+          <div class="overflow-x-auto rounded-2xl border border-white/10 glass shadow-2xl">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-900/60 border-b border-white/10 text-xs font-mono text-slate-400 uppercase tracking-wider font-extrabold">
+                  <th class="py-4 px-4">Assessment ID</th>
+                  <th class="py-4 px-4">Region</th>
+                  <th class="py-4 px-4">Monthly Income</th>
+                  <th class="py-4 px-4">Family Size</th>
+                  <th class="py-4 px-4">Risk Level</th>
+                  <th class="py-4 px-4 text-right">Risk Score</th>
+                </tr>
+              </thead>
+              <tbody id="registryTableBody" class="divide-y divide-white/5">
+                <!-- Injected dynamically with standard preloaded content via script.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="mt-4 flex justify-between items-center text-[10px] text-slate-500 font-mono">
+            <span>Showing recent family assessments</span>
+            <span>WADAAG AI Verified Database Records</span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 7: COMMUNITY IMPACT -->
+      <section id="impact" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative">
+        <div class="text-center max-w-3xl mx-auto mb-16 scroll-animate opacity-0 translate-y-8 transition-all duration-700">
+          <span class="text-xs tracking-widest font-mono font-extrabold uppercase text-somali-blue-500 bg-somali-blue-500/10 px-3 py-1 rounded border border-somali-blue-500/20">Real-World Impact</span>
+          <h2 class="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight mt-4">
+            Making Family Aid Fast, Transparent, and Fair
+          </h2>
+          <p class="text-slate-400 font-light mt-4 leading-relaxed">
+            Helping humanitarian organizations, community workers, and relief agencies deliver emergency support to families who need it most.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <!-- Box A: SDG 1 compliance -->
+          <div class="bg-slate-900/20 border border-white/5 rounded-2xl p-6 flex flex-col justify-between h-full hover:border-somali-blue-500/20 transition-all group">
+            <div class="space-y-4">
+              <span class="p-2 bg-somali-blue-500/10 text-somali-blue-400 rounded-lg inline-block font-mono text-xs font-black">
+                SDG-1
+              </span>
+              <h3 class="text-base font-bold text-white group-hover:text-somali-blue-400 transition-colors">Ending Extreme Poverty</h3>
+              <p class="text-xs text-slate-400 leading-normal">
+                Directs emergency cash and food assistance directly to families living below the survival line, without the high costs and delays of paper surveys.
+              </p>
+            </div>
+            <div class="border-t border-white/5 pt-4 mt-6 text-[10px] font-mono text-slate-500 flex items-center justify-between">
+              <span>Goal: Fast Support to Top Need</span>
+              <span class="text-somali-blue-400">Direct Delivery</span>
+            </div>
+          </div>
+
+          <!-- Box B: Social Safety -->
+          <div class="bg-slate-900/20 border border-white/5 rounded-2xl p-6 flex flex-col justify-between h-full hover:border-somali-blue-500/20 transition-all group">
+            <div class="space-y-4">
+              <span class="p-2 bg-emerald-500/10 text-emerald-400 rounded-lg inline-block font-mono text-xs font-black">
+                PROTECTION
+              </span>
+              <h3 class="text-base font-bold text-white group-hover:text-emerald-400 transition-colors">Early Disaster Protection</h3>
+              <p class="text-xs text-slate-400 leading-normal">
+                Alerts local community networks when drought or rising food prices threaten pastoral and farming families, allowing aid before livestock are lost.
+              </p>
+            </div>
+            <div class="border-t border-white/5 pt-4 mt-6 text-[10px] font-mono text-slate-500 flex items-center justify-between">
+              <span>Community Early Warning</span>
+              <span class="text-emerald-400">Active Monitoring</span>
+            </div>
+          </div>
+
+          <!-- Box C: Transparent Aid -->
+          <div class="bg-slate-900/20 border border-white/5 rounded-2xl p-6 flex flex-col justify-between h-full hover:border-somali-blue-500/20 transition-all group">
+            <div class="space-y-4">
+              <span class="p-2 bg-amber-500/10 text-amber-500 rounded-lg inline-block font-mono text-xs font-black">
+                FAIR AID
+              </span>
+              <h3 class="text-base font-bold text-white group-hover:text-amber-400 transition-colors">Fair & Equal Allocation</h3>
+              <p class="text-xs text-slate-400 leading-normal">
+                Calculations are based on transparent family income and expense numbers, ensuring fair treatment for families across all 18 Somali regions.
+              </p>
+            </div>
+            <div class="border-t border-white/5 pt-4 mt-6 text-[10px] font-mono text-slate-500 flex items-center justify-between">
+              <span>Fair & Transparent</span>
+              <span class="text-amber-500 font-semibold font-mono">100% Unbiased</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 8: FUTURE PLANS -->
+      <section class="w-full bg-slate-950/45 py-20 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="text-xs tracking-widest font-mono font-extrabold uppercase text-somali-blue-500 bg-somali-blue-500/10 px-3 py-1 rounded border border-somali-blue-500/20">Development Roadmap</span>
+            <h2 class="text-3xl font-display font-extrabold text-white tracking-tight mt-4">
+              Our Plan to Protect More Families
+            </h2>
+            <p class="text-slate-400 font-light mt-4 leading-relaxed">
+              How we are building WADAAG AI into a nationwide family support system.
+            </p>
+          </div>
+
+          <!-- Timeline -->
+          <div class="max-w-5xl mx-auto space-y-8 relative before:absolute before:inset-y-0 before:left-4 md:before:left-1/2 before:w-0.5 before:bg-white/5">
+            
+            <!-- Timeline Item 1 -->
+            <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-0 pl-10 md:pl-0">
+              <div class="w-full md:w-5/12 md:text-right md:pr-10 order-2 md:order-1">
+                <div class="bg-slate-900/40 p-6 rounded-2xl border border-white/5 space-y-2 inline-block max-w-md hover:border-somali-blue-500/20 transition-all">
+                  <span class="text-xs font-mono text-somali-blue-400 font-bold uppercase tracking-widest">Phase 1: Now Live</span>
+                  <h4 class="text-sm font-bold text-white">Household Risk Calculator</h4>
+                  <p class="text-xs text-slate-400">Easy-to-use assessment tool comparing family income against local living costs, family size, and regional climate conditions with instant saved records.</p>
+                </div>
+              </div>
+              <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-somali-blue-500 border-4 border-slate-950 z-10 flex items-center justify-between text-glow-blue glow-blue"></div>
+              <div class="w-full md:w-5/12 order-3 md:order-2"></div>
+            </div>
+
+            <!-- Timeline Item 2 -->
+            <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-0 pl-10 md:pl-0">
+              <div class="w-full md:w-5/12 order-2 md:order-2">
+                <div class="bg-slate-900/40 p-6 rounded-2xl border border-white/5 space-y-2 inline-block max-w-md hover:border-emerald-500/20 transition-all">
+                  <span class="text-xs font-mono text-emerald-400 font-bold uppercase tracking-widest">Phase 2: Target Late 2026</span>
+                  <h4 class="text-sm font-bold text-white">Live Weather & Market Price Alerts</h4>
+                  <p class="text-xs text-slate-400">Automated tracking of rainfall, pasture dry spells, and grain prices across all 18 Somali regions to update household vulnerability automatically.</p>
+                </div>
+              </div>
+              <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-emerald-500 border-4 border-slate-950 z-10"></div>
+              <div class="w-full md:w-5/12 order-3 md:order-1"></div>
+            </div>
+
+            <!-- Timeline Item 3 -->
+            <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-0 pl-10 md:pl-0 font-display">
+              <div class="w-full md:w-5/12 md:text-right md:pr-10 order-2 md:order-1">
+                <div class="bg-slate-900/40 p-6 rounded-2xl border border-white/5 space-y-2 inline-block max-w-md hover:border-purple-500/20 transition-all">
+                  <span class="text-xs font-mono text-purple-400 font-bold uppercase tracking-widest">Phase 3: 2027</span>
+                  <h4 class="text-sm font-bold text-slate-100">Direct Mobile Cash Aid</h4>
+                  <p class="text-xs text-slate-400">Direct integration with Hormuud EVC Plus to send verified monthly cash assistance straight to high-risk family phones with zero delay.</p>
+                </div>
+              </div>
+              <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-purple-500 border-4 border-slate-950 z-10"></div>
+              <div class="w-full md:w-5/12 order-3 md:order-2"></div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 9: CONTACT & PARTNERSHIP -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <!-- Contact Details Card -->
+          <div class="lg:col-span-5 scroll-animate opacity-0 translate-y-8 transition-all duration-700">
+            <div class="glass p-6 rounded-2xl border border-white/10 relative overflow-hidden space-y-4">
+              <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-somali-blue-500 to-emerald-500"></div>
+              
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-full bg-somali-blue-500/10 text-somali-blue-400 font-mono flex items-center justify-between text-lg font-bold border border-somali-blue-500/20 shadow-md">
+                  <span class="mx-auto">★</span>
+                </div>
+                <div>
+                  <h3 class="text-md font-display font-bold text-white">WADAAG AI Support</h3>
+                  <p class="text-xs text-slate-400 uppercase tracking-widest font-mono">Community Relief Desk</p>
+                </div>
+              </div>
+
+              <div class="space-y-3.5 text-xs text-slate-300 pt-3 border-t border-white/5">
+                <div class="flex items-start gap-3">
+                  <span class="p-1.5 rounded bg-white/5 text-slate-400"><i data-lucide="map-pin" class="w-4 h-4"></i></span>
+                  <div>
+                    <h5 class="font-bold text-slate-200">Main Office</h5>
+                    <p class="text-[10px] text-slate-400 leading-normal">Mogadishu, Somalia</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                  <span class="p-1.5 rounded bg-white/5 text-slate-400"><i data-lucide="mail" class="w-4 h-4"></i></span>
+                  <div>
+                    <h5 class="font-bold text-slate-200">Contact Email</h5>
+                    <p class="text-[10px] text-slate-400">ayeshamohamed833@gmail.com</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                  <span class="p-1.5 rounded bg-white/5 text-slate-400"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i></span>
+                  <div>
+                    <h5 class="font-bold text-slate-200">Family Privacy Protected</h5>
+                    <p class="text-[10px] text-slate-400">All household data is treated with confidentiality and stored safely.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact input forms -->
+          <div class="lg:col-span-7 bg-slate-900/40 border border-white/5 p-8 rounded-2xl glass-accent scroll-animate opacity-0 translate-y-8 transition-all duration-700 delay-200">
+            <h3 class="text-lg font-display font-bold text-white">Partner with WADAAG AI</h3>
+            <p class="text-xs text-slate-400 mt-1 max-w-xl">Are you an NGO, community organization, or relief worker? Contact our team to try the household assessment tool for your local program.</p>
+            
+            <form id="contactForm" class="space-y-4 mt-6 text-xs text-slate-300">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="flex flex-col gap-1.5">
+                  <label for="contactName" class="text-slate-400">Your Full Name</label>
+                  <input type="text" id="contactName" placeholder="e.g. Mohamed Ibrahim" required class="bg-slate-950 border border-white/10 rounded-lg px-3 py-2.5 text-slate-200 text-xs font-medium" />
+                </div>
+                <div class="flex flex-col gap-1.5">
+                  <label for="contactEmail" class="text-slate-400">Email Address</label>
+                  <input type="email" id="contactEmail" placeholder="e.g. mohamed@example.com" required class="bg-slate-950 border border-white/10 rounded-lg px-3 py-2.5 text-slate-200 text-xs font-mono" />
+                </div>
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <label for="contactOrg" class="text-slate-400">Organization or Community Group</label>
+                <input type="text" id="contactOrg" placeholder="e.g. Local Relief Committee / Red Crescent" required class="bg-slate-950 border border-white/10 rounded-lg px-3 py-2.5 text-slate-200 text-xs font-medium" />
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <label for="contactMsg" class="text-slate-400">How Can We Help?</label>
+                <textarea id="contactMsg" rows="4" placeholder="Tell us about the community, number of families, and what kind of assistance is needed..." required class="bg-slate-950 border border-white/10 rounded-lg px-3 py-2.5 text-slate-200 text-xs font-sans leading-relaxed"></textarea>
+              </div>
+
+              <button type="submit" class="px-6 py-3.5 hover:scale-[1.01] active:scale-[0.99] rounded-xl text-white font-bold bg-gradient-to-r from-somali-blue-600 to-somali-blue-500 hover:from-somali-blue-500 hover:to-somali-blue-400 shadow-lg text-xs font-mono tracking-widest uppercase cursor-pointer flex items-center gap-2 justify-center transition-all w-full sm:w-auto">
+                <i data-lucide="send" class="w-4 h-4"></i>
+                <span>Send Message</span>
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- PROFESSIONAL LANDING FOOTER STYLE -->
+    <footer class="w-full bg-slate-950 py-12 border-t border-white/5 mt-auto relative overflow-hidden">
+      <!-- subtle blue bar showing Somali theme -->
+      <div class="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-somali-blue-600 via-sky-400 to-white"></div>
+      
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center gap-3">
+          <div>
+            <h4 class="text-xs font-mono font-bold text-slate-300">WADAAG AI &middot; SOMALI HOUSEHOLD ECONOMIC SUPPORT SYSTEM</h4>
+            <p class="text-[10px] text-slate-500 mt-0.5 font-display">&copy; 2026 WADAAG AI. Dedicated to supporting vulnerable Somali families with dignity and care.</p>
+          </div>
+        </div>
+        
+        <div class="flex flex-wrap items-center gap-6 text-[10px] uppercase font-mono text-slate-500 font-bold">
+          <a href="#about" class="hover:text-slate-300 transition-colors">Why It Matters</a>
+          <span>&middot;</span>
+          <a href="#methodology" class="hover:text-slate-300 transition-colors">How It Works</a>
+          <span>&middot;</span>
+          <a href="#dashboard" class="hover:text-slate-300 transition-colors">Risk Calculator</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Link standard script.js which embeds custom CSS and triggers events -->
+    <script type="module" src="/src/script.js"></script>
+  </body>
+</html>
